@@ -1,0 +1,13 @@
+{
+    "PrdRef": ["REFERENCJA_ELEMENTU", "referencja_elementu", "RefEl"],
+    "PrdName": ["Bezeichnung", "bezeichnung", "Bez","Bezeichnung............................."],
+    "MatRef": ["MATERIAL", "material", "Mat","MAT","mat"],
+    "Length": ["Length [mm]", "length_mm", "Lng", "LENGTH", "length", "Abmess_1"],
+    "Profile": ["Profile", "profile", "Prof", "PROFIL", "profil","PROFILE"],
+    "TYP": ["TYP", "typ", "Type"],
+	 "Height": ["Height", "height", "t", "HEIGHT", "height", "grubosc", "grubość","GRUBOSC", "GRUBOŚĆ"],
+	 "Stufe": ["Stufe", "STUFE", "stufe"],
+    "ZLOZENIE": ["ZŁOŻENIE", "zlozenie", "ZLOZENIE"],
+	"Anz": ["Amount", "ANZ", "anz", "Anz."]
+	 
+}
