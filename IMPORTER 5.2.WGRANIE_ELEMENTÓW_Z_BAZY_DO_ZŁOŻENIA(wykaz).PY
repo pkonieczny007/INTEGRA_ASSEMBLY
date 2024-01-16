@@ -17,7 +17,7 @@ for _, row in df.iterrows():
 xml_content += '</DATAEX>'
 
 # Zapisanie danych do pliku XML
-with open("output_z_bazy_do_zlozen.xml", "w") as xml_file:
+with open("output_z_bazy_do_zlozen.xml", "w", encoding='utf-8') as xml_file:
     xml_file.write(xml_content)
 
 print("Plik XML został utworzony: plik_wyjsciowy -> xml")
