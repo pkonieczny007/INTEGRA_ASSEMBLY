@@ -61,7 +61,7 @@ if __name__ == "__main__":
     plik_excel = "dane.xlsx"
     xml_dane = generuj_xml_z_excela(plik_excel)
 
-    with open("DELETE+marszruty.xml", "w") as plik:
+    with open("del+addMarszruty.xml", "w") as plik:
         plik.write(xml_dane)
 
     print("Dane XML zostały wygenerowane i zapisane w pliku wynik.xml.")
