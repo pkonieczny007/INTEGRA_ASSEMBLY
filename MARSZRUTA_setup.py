@@ -9,6 +9,7 @@ GPT - 8.2- DODAWANIE_MARSZRUTY.PY
 DOPASOWANIE_DANYCH_DO_MARSZRUTY.PY
 STARYdane.xlsx
 tabela_mapowania.xlsx
+dane.xlsx
 """.strip().split('\n')
 
 # Tworzenie nowego folderu "MARSZRUTY", jeśli nie istnieje
