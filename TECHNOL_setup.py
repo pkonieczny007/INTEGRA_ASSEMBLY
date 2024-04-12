@@ -6,10 +6,10 @@ import shutil
 
 # Definicja listy plików jako wielolinijkowego stringa, łatwego do edycji
 lista_plikow = """
-sprawdzanie_v.2.0.py
+sprawdzanie_v.3.0.py
 dane.xlsx
 wynik.py
-
+AKTUALIZUJ_wykaz.py
 
 """.strip().split('\n')
 
