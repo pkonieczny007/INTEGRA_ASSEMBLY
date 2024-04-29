@@ -8,6 +8,7 @@
 	 "Height": ["Height", "height", "t", "HEIGHT", "height", "grubosc", "grubość","GRUBOSC", "GRUBOŚĆ"],
 	 "Stufe": ["Stufe", "STUFE", "stufe"],
     "ZLOZENIE": ["ZŁOŻENIE", "zlozenie", "ZLOZENIE"],
+	"Width": ["Width", "Abmes_2"],
 	"Anz": ["Amount", "ANZ", "anz", "Anz."]
 	 
 }
