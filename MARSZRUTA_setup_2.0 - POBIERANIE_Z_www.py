@@ -14,6 +14,7 @@ GPT - 9.0- DODAWANIE_MARSZRUTY+DELETE.PY
 GPT - DELETE_MARSZRUT.PY
 tabela_mapowania.xlsx
 UTWÓRZ_DANE.py
+WGRAJ_DO_BAZY_XML(marszruty).py
 
 
 """.strip().split('\n')
