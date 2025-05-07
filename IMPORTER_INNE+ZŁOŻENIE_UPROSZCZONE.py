@@ -1,9 +1,28 @@
 #!/usr/bin/env python3
+import os
+import sys
+import urllib.request
 import pandas as pd
 import xml.etree.ElementTree as ET
 import json
-import sys
 import xml.dom.minidom as minidom
+
+GITHUB_MAPPING_URL = "https://raw.githubusercontent.com/pkonieczny007/INTEGRA_ASSEMBLY/main/mapping.json"
+MAPPING_FILE = "mapping.json"
+EXCEL_FILE = "wykaz.xlsx"
+
+def fetch_mapping():
+    """
+    Pobiera plik mapping.json z GitHub, jeśli nie istnieje lokalnie.
+    """
+    if not os.path.exists(MAPPING_FILE):
+        try:
+            print(f"Pobieram {MAPPING_FILE} z GitHub...")
+            urllib.request.urlretrieve(GITHUB_MAPPING_URL, MAPPING_FILE)
+            print("Pobrano mapping.json.")
+        except Exception as e:
+            print(f"Błąd pobierania {MAPPING_FILE}: {e}")
+            sys.exit(1)
 
 def find_column_name(data_columns, possible_names):
     """
@@ -15,19 +34,22 @@ def find_column_name(data_columns, possible_names):
     return None
 
 def main():
+    # Upewnij się, że mamy mapping.json
+    fetch_mapping()
+
     # Wczytaj dane z pliku Excel
     try:
-        data = pd.read_excel("wykaz.xlsx")
+        data = pd.read_excel(EXCEL_FILE)
     except Exception as e:
-        print(f"Błąd podczas wczytywania pliku Excel: {e}")
+        print(f"Błąd podczas wczytywania pliku Excel '{EXCEL_FILE}': {e}")
         sys.exit(1)
     
     # Wczytaj mapowanie z pliku mapping.json (kodowanie UTF-8)
     try:
-        with open("mapping.json", "r", encoding="utf-8") as file:
-            mapping = json.load(file)
+        with open(MAPPING_FILE, "r", encoding="utf-8") as f:
+            mapping = json.load(f)
     except Exception as e:
-        print(f"Błąd podczas wczytywania pliku mapping.json: {e}")
+        print(f"Błąd podczas wczytywania pliku '{MAPPING_FILE}': {e}")
         sys.exit(1)
     
     # Utwórz korzeń XML
@@ -44,7 +66,6 @@ def main():
         {"FldRef": "PCATEGORY", "FldValue": "2", "FldType": "100"},
         {"FldRef": "ForSale", "FldValue": "1", "FldType": "30"}
     ]
-    
     inne_template = [
         {"FldRef": "PrdRef", "FldType": "20"},
         {"FldRef": "PrdName", "FldType": "20"},
@@ -54,48 +75,38 @@ def main():
         {"FldRef": "Weight", "FldValue": "0", "FldType": "100"}
     ]
     
-    # Dodaj komentarz dla sekcji tworzenia nowych produktów
+    # Nowe produkty
     root.append(ET.Comment("Nowe produkty: ZŁOŻENIE i INNE"))
-    
-    # Przetwórz każdy wiersz danych – tworzenie nowych produktów
     for _, row in data.iterrows():
-        typ = None
-        if column_mapping.get("TYP"):
-            typ = row[column_mapping["TYP"]]
-        
-        # Jeśli typ to "ZŁOŻENIE" – użyj szablonu złożenia
+        typ = row[column_mapping.get("TYP")] if column_mapping.get("TYP") else None
         if typ == "ZŁOŻENIE":
-            command = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PRODUCTS")
+            cmd = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PRODUCTS")
             for field in zlozenie_template:
-                if "FldValue" not in field:
-                    col_name = column_mapping.get(field["FldRef"])
-                    fld_value = str(row[col_name]) if col_name is not None else ""
+                if "FldValue" in field:
+                    val = field["FldValue"]
                 else:
-                    fld_value = field["FldValue"]
-                ET.SubElement(command, "FIELD", FldRef=field["FldRef"], FldValue=fld_value, FldType=field["FldType"])
-        # Jeśli typ to "INNE" – użyj szablonu INNE
+                    col = column_mapping.get(field["FldRef"])
+                    val = str(row[col]) if col else ""
+                ET.SubElement(cmd, "FIELD", FldRef=field["FldRef"], FldValue=val, FldType=field["FldType"])
         elif typ == "INNE":
-            command = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PRODUCTS")
+            cmd = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PRODUCTS")
             for field in inne_template:
-                if "FldValue" not in field:
-                    col_name = column_mapping.get(field["FldRef"])
-                    fld_value = str(row[col_name]) if col_name is not None else ""
+                if "FldValue" in field:
+                    val = field["FldValue"]
                 else:
-                    fld_value = field["FldValue"]
-                ET.SubElement(command, "FIELD", FldRef=field["FldRef"], FldValue=fld_value, FldType=field["FldType"])
+                    col = column_mapping.get(field["FldRef"])
+                    val = str(row[col]) if col else ""
+                ET.SubElement(cmd, "FIELD", FldRef=field["FldRef"], FldValue=val, FldType=field["FldType"])
     
-    # Dodaj komentarz dla sekcji wgrywania elementów do złożeń
+    # Elementy w złożeniach
     root.append(ET.Comment("Wgrywanie elementów do złożeń"))
-    
-    # Dla każdego wiersza danych dodaj polecenie wgrywania elementów do złożeń.
-    # Zakładamy, że w danych istnieją kolumny: "ZŁOŻENIE", "REFERENCJA_ELEMENTU" oraz "Algorytm dla Anz"
     for _, row in data.iterrows():
-        command = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PR_SSTT_00000100")
-        ET.SubElement(command, "FIELD", FldRef="PrdRefOrg", FldValue=str(row["ZŁOŻENIE"]), FldType="20")
-        ET.SubElement(command, "FIELD", FldRef="PrdRefDst", FldValue=str(row["REFERENCJA_ELEMENTU"]), FldType="20")
-        ET.SubElement(command, "FIELD", FldRef="PQUANT", FldValue=str(row["Algorytm dla Anz"]), FldType="100")
+        cmd = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PR_SSTT_00000100")
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefOrg", FldValue=str(row.get("ZŁOŻENIE", "")), FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefDst", FldValue=str(row.get("REFERENCJA_ELEMENTU", "")), FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PQUANT",    FldValue=str(row.get("Algorytm dla Anz", "")), FldType="100")
     
-    # Zapisz wygenerowany XML do pliku
+    # Zapis do pliku
     output_file = "output_combined.xml"
     xml_str = ET.tostring(root, encoding="utf-8")
     dom = minidom.parseString(xml_str)
