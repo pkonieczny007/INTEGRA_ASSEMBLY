@@ -15,6 +15,7 @@ GPT - DELETE_MARSZRUT.PY
 tabela_mapowania.xlsx
 UTWÓRZ_DANE.py
 WGRAJ_DO_BAZY_XML(marszruty).py
+UTWÓRZ_DANE_BM.py
 
 
 """.strip().split('\n')
