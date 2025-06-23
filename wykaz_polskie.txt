@@ -1,0 +1,15 @@
+IMPORTER 5.4.WGRANIE_PL_ELEMENTÓW_Z_BAZY_DO_ZŁOŻENIA(wykaz)_PL+mapping.PY
+IMPORTER_ZŁOŻENIE2.3-PL_wgrywanie_do_bazy.py
+IMPORTER_PROFIL2.2 - PL-wgrywanie_do_bazy.py
+IMPORTER_INNE2.2-PL_wgrywanie_do_bazy+POLSKIE_ZNAKI_v2.py
+mapping.json
+sprawdzenieXMLv2.py
+sprawdzenieXMLv3(+combined).py
+MARSZRUTA_setup_2.0 - POBIERANIE_Z_www.py
+WGRAJ_DO_BAZY_XML.py
+TWORZENIE_WYKAZU_EL.ZŁĄCZNYCH.py
+WGRAJ_DO_BAZY_XML —inne.py
+WGRAJ_DO_BAZY_XML —marszl — kopia — kopia.py
+WGRAJ_DO_BAZY_XML —profil — kopia.py
+WGRAJ_DO_BAZY_XML(z_bazy_do_zlozen).py
+WGRAJ_DO_BAZY_XML-combined.py
