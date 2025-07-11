@@ -9,6 +9,10 @@
 	 "Stufe": ["Stufe", "STUFE", "stufe"],
     "ZLOZENIE": ["ZŁOŻENIE", "zlozenie", "ZLOZENIE"],
 	"Width": ["Width", "Abmes_2"],
-	"Anz": ["Amount", "ANZ", "anz", "Anz."]
+	"Anz": ["Amount", "ANZ", "anz", "Anz."],
+	"BM_TYP": ["BM_TYP", "bm_typ"],
+	"BM_REFERENCJA": ["BM_REFERENCJA", "bm_referencja"],
+	"BM_ZŁOŻENIE": ["BM_ZŁOŻENIE", "bm_zlozenie"],
+	"BM_NAME": ["BM_NAME", "bm_name"]
 	 
 }
