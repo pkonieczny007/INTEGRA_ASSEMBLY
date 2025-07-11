@@ -86,7 +86,7 @@ for _, row in df[mask_bialy].iterrows():
 buf = BytesIO()
 ET.ElementTree(root).write(buf, encoding="windows-1250", xml_declaration=True)
 xml = buf.getvalue().replace(b"encoding='utf-8'", b"encoding=\"windows-1250\"")
-with open("output_z_bazy_do_zlozen.xml.xml", "wb") as f:
+with open("output_z_bazy_do_zlozen.xml", "wb") as f:
     f.write(xml)
 
 print("Zapisano output_z_bazy_do_zlozen.xml")
