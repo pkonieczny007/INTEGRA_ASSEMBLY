@@ -1,5 +1,6 @@
 IMPORTER 5.4.WGRANIE_PL_ELEMENTÓW_Z_BAZY_DO_ZŁOŻENIA(wykaz)_PL+mapping.PY
 IMPORTER_ZŁOŻENIE2.3-PL_wgrywanie_do_bazy.py
+IMPORTER_ZŁOŻENIE3.0-PL_wgrywanie_do_bazy(CM+BM).PY
 IMPORTER_PROFIL2.2 - PL-wgrywanie_do_bazy.py
 IMPORTER_INNE2.2-PL_wgrywanie_do_bazy+POLSKIE_ZNAKI_v2.py
 mapping.json
