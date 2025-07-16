@@ -80,7 +80,7 @@ if column_mapping.get("BM_TYP") and column_mapping.get("BM_REFERENCJA"):
                 if ref == "PrdRef":
                     fld_value = str(row.get(column_mapping["BM_REFERENCJA"], "")).strip()
                 elif ref == "PrdName":
-                    fld_value = str(row.get(column_mapping.get("BM_NAME", "BM_REFERENCJA"), "")).strip()
+                    fld_value = str(row.get(column_mapping["PrdName"], "")).strip()
                 else:
                     fld_value = field.get("FldValue", "")
                 ET.SubElement(command, "FIELD", FldRef=ref, FldValue=fld_value, FldType=field["FldType"])
