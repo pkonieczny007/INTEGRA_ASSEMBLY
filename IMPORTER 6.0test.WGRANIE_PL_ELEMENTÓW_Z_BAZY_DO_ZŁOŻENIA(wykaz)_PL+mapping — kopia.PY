@@ -81,7 +81,31 @@ for _, row in df[mask_bialy].iterrows():
         ET.SubElement(cmd, "FIELD", FldRef="PrdRefOrg", FldValue=prd_ref_org, FldType="20")
         ET.SubElement(cmd, "FIELD", FldRef="PrdRefDst", FldValue=prd_ref_dst, FldType="20")
         ET.SubElement(cmd, "FIELD", FldRef="PQUANT",   FldValue=qty,         FldType="100")
+# 7.3 Czarny montaż PROFIL
+mask = df[column_mapping["TYP"]].str.strip().str.upper() == "PROFIL"
+for _, row in df[mask].iterrows():
+    prd_ref_org = row[column_mapping["ZLOZENIE"]].strip()
+    prd_ref_dst = row[column_mapping["REFERENCJA_ELEMENTU"]].strip()
+    qty         = row[column_mapping["Anz"]].strip()
+    if prd_ref_org and prd_ref_dst:
+        cmd = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PR_SSTT_00000100")
+        cmd.append(ET.Comment("PROFIL"))
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefOrg", FldValue=prd_ref_org, FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefDst", FldValue=prd_ref_dst, FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PQUANT",   FldValue=qty,         FldType="100")
 
+# 7.4 Biały montaż PROFIL
+mask = df[column_mapping["BM_TYP"]].str.strip().str.upper() == "PROFIL"
+for _, row in df[mask].iterrows():
+    prd_ref_org = row[column_mapping["BM_ZŁOŻENIE"]].strip()
+    prd_ref_dst = row[column_mapping["BM_REFERENCJA"]].strip()
+    qty         = row[column_mapping["Anz"]].strip()
+    if prd_ref_org and prd_ref_dst:
+        cmd = ET.SubElement(root, "COMMAND", Name="Import", TblRef="PR_SSTT_00000100")
+        cmd.append(ET.Comment("BM_PROFIL"))
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefOrg", FldValue=prd_ref_org, FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PrdRefDst", FldValue=prd_ref_dst, FldType="20")
+        ET.SubElement(cmd, "FIELD", FldRef="PQUANT",   FldValue=qty,         FldType="100")
 # 8. Zapis pliku
 buf = BytesIO()
 ET.ElementTree(root).write(buf, encoding="windows-1250", xml_declaration=True)
