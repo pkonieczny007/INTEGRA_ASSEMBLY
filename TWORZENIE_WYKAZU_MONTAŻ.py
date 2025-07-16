@@ -39,7 +39,7 @@ def main():
     for sheet_name in xls.sheet_names:
         if sheet_name in acceptable_sheet_names:
             df = pd.read_excel(xls, sheet_name=sheet_name)
-            output_file = "montaż.xlsx"
+            output_file = "wykaz.xlsx"
             df.to_excel(output_file, index=False)
 
             autofit_column_widths(output_file)
