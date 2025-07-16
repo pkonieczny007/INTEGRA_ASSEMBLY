@@ -15,3 +15,4 @@ WGRAJ_DO_BAZY_XML —marszl — kopia — kopia.py
 WGRAJ_DO_BAZY_XML —profil — kopia.py
 WGRAJ_DO_BAZY_XML(z_bazy_do_zlozen).py
 WGRAJ_DO_BAZY_XML-combined.py
+TWORZENIE_WYKAZU_INTEGRA_ZAKUPY.py
