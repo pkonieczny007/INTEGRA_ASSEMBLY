@@ -2,9 +2,22 @@ import pandas as pd
 import os
 import tkinter as tk
 from tkinter import filedialog
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
 
 # Lista dopuszczalnych nazw arkuszy
 acceptable_sheet_names = ["INTEGRA", "integra", "Integra"]
+
+def autofit_column_widths(filename, sheet_name="Sheet1"):
+    wb = load_workbook(filename)
+    ws = wb[sheet_name]
+
+    for column_cells in ws.columns:
+        length = max(len(str(cell.value)) if cell.value is not None else 0 for cell in column_cells)
+        column_letter = get_column_letter(column_cells[0].column)
+        ws.column_dimensions[column_letter].width = length + 2  # +2 for padding
+
+    wb.save(filename)
 
 def main():
     # Okno dialogowe do wyboru pliku
@@ -26,8 +39,12 @@ def main():
     for sheet_name in xls.sheet_names:
         if sheet_name in acceptable_sheet_names:
             df = pd.read_excel(xls, sheet_name=sheet_name)
-            df.to_excel("zakupy.xlsx", index=False)
-            print(f"Zapisano arkusz '{sheet_name}' do 'zakupy.xlsx'.")
+            output_file = "zakupy.xlsx"
+            df.to_excel(output_file, index=False)
+
+            autofit_column_widths(output_file)
+
+            print(f"Zapisano arkusz '{sheet_name}' do '{output_file}' z dopasowaną szerokością kolumn.")
             return
 
     print("Nie znaleziono zakładki o nazwie z listy dopuszczalnych nazw:" +
